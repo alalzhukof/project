@@ -110,7 +110,6 @@ def users_out(file_name):
     with open(file_name, 'r') as f:
         users = json.loads(str(f.read()))
         return users
-
 '''
 ## users_out
 ### Описание
@@ -141,7 +140,6 @@ GET /users_out?file_name=users.json
   ]
 }
 '''
-
 @bot.message_handler(commands=['start'])
 def welcome_start(message):
     """
