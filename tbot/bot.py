@@ -56,113 +56,40 @@ def users_in(file_name, users):
     with open(file_name, 'w') as f:
         f.write(json.dumps(users))
 '''
-### Описание
+
 Эта функция используется для записи данных о пользователях в файл в формате JSON.
-### Путь
-`POST /users_in`
-### Параметры
+args:
 - `file_name` (обязательный) - Имя файла, в который нужно записать данные о пользователях (строка)
 - `users` (обязательный) - Данные о пользователях в формате JSON
-### Ответ
+returns:
 Возвращает статус операции - успешно или с ошибкой.
-#### Пример запроса
-```
-POST /users_in
-{
-  "file_name": "users.json",
-  "users": [
-    {
-      "id": 1,
-      "name": "John"
-    },
-    {
-      "id": 2,
-      "name": "Jane"
-    }
-  ]
-}
-```
 
-#### Пример ответа
-```json
-{
-  "status": "success"
-}
-### Пример использования
-```python
-import requests
-
-data = {
-    "file_name": "users.json",
-    "users": [
-        {
-            "id": 1,
-            "name": "John"
-        },
-        {
-            "id": 2,
-            "name": "Jane"
-        }
-    ]
-}
 '''
 def users_out(file_name):
     with open(file_name, 'r') as f:
         users = json.loads(str(f.read()))
         return users
 '''
-## users_out
-### Описание
-Эта функция используется для считывания данных о пользователях из JSON файла.
-### Путь
-`GET /users_out`
-### Параметры
-- `file_name` (обязательный) - Имя файла, из которого нужно считать данные о пользователях (строка)
-### Ответ
-Возвращает данные о пользователях в формате JSON.
-#### Пример запроса
-```
-GET /users_out?file_name=users.json
-```
 
-#### Пример ответа
-```json
-{
-  "users": [
-    {
-      "id": 1,
-      "name": "John"
-    },
-    {
-      "id": 2,
-      "name": "Jane"
-    }
-  ]
-}
+Эта функция используется для считывания данных о пользователях из JSON файла.
+
+Args:
+- `file_name` (обязательный) - Имя файла, из которого нужно считать данные о пользователях (строка)
+Returns:
+Возвращает данные о пользователях в формате JSON.
 '''
 @bot.message_handler(commands=['start'])
 def welcome_start(message):
     """
-  ## welcome_start
+
 
 ### Описание
 Эта функция приветствует пользователя и предлагает выбрать язык бота.
 
-### Путь
-`GET /start`
+Args:message
 
-### Параметры
-Отсутствуют
-
-### Ответ
+Returns:
 Возвращает сообщение с предложением выбрать язык бота.
-
-#### Пример запроса
-GET /start
-#### Пример ответа
-Привет, <имя пользователя>! Выберите язык бота:
-- ENGLISH
-- РУССКИЙ
 
         """
     if not IsBaned(message):
@@ -214,15 +141,13 @@ GET /start
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
-    """## callback_worker
+    """
 
-### Описание
+
 Эта функция обрабатывает действия пользователя, связанные с выбором языка бота и другими действиями.
-### Путь
-`POST /callback_worker`
-### Параметры
+Args:
 - `call` (обязательный) - Данные о вызове
-### Ответ
+Returns:
 Возвращает сообщение об успешном выполнении запроса.
 """
     users = users_out('users.json')
@@ -263,18 +188,13 @@ def callback_worker(call):
 
 @bot.message_handler(commands=['help'])
 def welcome_help(message):
-    """## welcome_help
-
-### Описание
+    """
 Эта функция отображает справочную информацию для пользователя.
 
-### Путь
-`GET /help`
+Args:
+-message
 
-### Параметры
-Отсутствуют
-
-### Ответ
+Returns:
 Возвращает справочную информацию.
 """
     if not IsBaned(message):
@@ -291,18 +211,11 @@ def welcome_help(message):
 @bot.message_handler(commands=['pay'])
 def pay(message):
     """
-    ## pay
-
-### Описание
 Эта функция предоставляет информацию о способе оплаты услуг.
 
-### Путь
-`GET /pay`
-
-### Параметры
-Отсутствуют
-
-### Ответ
+Args:
+    -message
+Returns:
 Возвращает информацию о способе оплаты.
 
 """
@@ -325,18 +238,12 @@ def pay(message):
 @bot.message_handler(commands=["price"])
 def price(message):
     """
-    ## price
 
-### Описание
 Эта функция обрабатывает команду для получения информации о цене услуг.
 
-### Путь
-`GET /price`
+Args:message
 
-### Параметры
-Отсутствуют
-
-### Ответ
+Returns:
 Возвращает информацию о получении запроса и ответе в ближайшее время.
 """
     if not IsBaned(message):
@@ -353,18 +260,12 @@ def price(message):
 
 @bot.message_handler(commands=['task'])
 def exercise(message):
-    """## exercise
-
-### Описание
+    """
 Эта функция обрабатывает команду для отправки запроса на выполнение задания.
 
-### Путь
-`POST /exercise`
-
-### Параметры
-Отсутствуют
-
-### Ответ
+Args:
+    message
+Returns:
 Отправляет сообщение с инструкциями.
 
 ```
@@ -393,22 +294,14 @@ def exercise(message):
 @bot.message_handler(commands=['send'])
 def working(message):
     '''
-    ## working
 
-### Описание
 Эта функция отправляет сообщение заданному получателю.
 
-### Путь
-`POST /working`
-
-### Параметры
+Args:
 - `message` (обязательный) - Сообщение, которое необходимо отправить
 
-### Ответ
+Returns:
 Возвращает статус выполнения операции.
-
-    :param message:
-    :return:
     '''
     if message.from_user.username in usernames:
         try:
